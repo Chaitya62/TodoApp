@@ -21,7 +21,9 @@ export default class App extends Component {
       ]
     };
   }
-
+  handleAddTodo(text) {
+    console.log('new todo', text);
+  }
   render() {
     return (
       <div>
@@ -33,7 +35,7 @@ export default class App extends Component {
               App Component
               <Search/>
               <TodoList {...this.state}/>
-              <AddTodo/>
+              <AddTodo onAddTodo={this.handleAddTodo.bind(this)}/>
             </div>
             <div className="medium-3 large-4 cell"></div>
           </div>
