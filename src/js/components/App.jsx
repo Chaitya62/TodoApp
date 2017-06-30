@@ -9,7 +9,17 @@ export default class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      todos: [
+        {
+          id: 1,
+          text: 'Walk the dog'
+        }, {
+          id: 2,
+          text: 'Clean the yard'
+        }
+      ]
+    };
   }
 
   render() {

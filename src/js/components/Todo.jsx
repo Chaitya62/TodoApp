@@ -11,7 +11,7 @@ export default class Todo extends Component {
 
   render() {
     return (
-      <div>To do</div>
+      <div>Todo</div>
     );
   }
 
