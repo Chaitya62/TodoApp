@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import uuid from 'node-uuid';
+import moment from 'moment';
 
 import AddTodo from 'AddTodo';
 import TodoList from 'TodoList';
@@ -27,7 +28,9 @@ export default class App extends Component {
         ...this.state.todos, {
           id: uuid(),
           text: text,
-          completed: false
+          completed: false,
+          createdAt: moment().unix(),
+          completedAt: undefined
         }
       ]
     })
@@ -39,6 +42,9 @@ export default class App extends Component {
     var updatedTodos = this.state.todos.map((todo) => {
       if (todo.id == todoId) {
         todo.completed = !todo.completed;
+        todo.completedAt = todo.completed
+          ? moment().unix()
+          : undefined;
       }
       return todo;
     });
