@@ -12,10 +12,12 @@ export default class Todo extends Component {
   render() {
     var {todo} = this.props;
     return (
-      <div>
-        <p>
-          {todo.text}
-        </p>
+
+      <div onClick={() => {
+        this.props.onToggle(todo.id);
+      }}>
+
+        <input type="checkbox" checked={todo.completed}/> {todo.text}
       </div>
     );
   }

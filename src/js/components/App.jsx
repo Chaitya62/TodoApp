@@ -14,10 +14,12 @@ export default class App extends Component {
       todos: [
         {
           id: uuid(),
-          text: 'Walk the dog'
+          text: 'Walk the dog',
+          completed: false
         }, {
           id: uuid(),
-          text: 'Clean the yard'
+          text: 'Clean the yard',
+          completed: true
         }
       ],
       showCompleted: false,
@@ -29,13 +31,23 @@ export default class App extends Component {
       todos: [
         ...this.state.todos, {
           id: uuid(),
-          text: text
+          text: text,
+          completed: false
         }
       ]
     })
   }
   handleSearch(showCompleted, searchText) {
     this.setState({showCompleted: showCompleted, searchText: searchText.toLowerCase()});
+  }
+  handleToggle(todoId) {
+    var updatedTodos = this.state.todos.map((todo) => {
+      if (todo.id == todoId) {
+        todo.completed = !todo.completed;
+      }
+      return todo;
+    });
+    this.setState({todos: updatedTodos});
   }
   render() {
     return (
@@ -47,7 +59,7 @@ export default class App extends Component {
             <div className="cell large-4 small-12 medium-6 small-centered">
 
               <Search onSearch={this.handleSearch.bind(this)}/>
-              <TodoList {...this.state}/>
+              <TodoList {...this.state} onToggle={this.handleToggle.bind(this)}/>
               <AddTodo onAddTodo={this.handleAddTodo.bind(this)}/>
             </div>
             <div className="medium-3 large-4 cell"></div>

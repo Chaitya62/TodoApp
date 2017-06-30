@@ -38834,6 +38834,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(9);
@@ -38881,10 +38883,12 @@ var App = function (_Component) {
     _this.state = {
       todos: [{
         id: (0, _nodeUuid2.default)(),
-        text: 'Walk the dog'
+        text: 'Walk the dog',
+        completed: false
       }, {
         id: (0, _nodeUuid2.default)(),
-        text: 'Clean the yard'
+        text: 'Clean the yard',
+        completed: true
       }],
       showCompleted: false,
       searchText: ''
@@ -38898,7 +38902,8 @@ var App = function (_Component) {
       this.setState({
         todos: [].concat(_toConsumableArray(this.state.todos), [{
           id: (0, _nodeUuid2.default)(),
-          text: text
+          text: text,
+          completed: false
         }])
       });
     }
@@ -38906,6 +38911,17 @@ var App = function (_Component) {
     key: 'handleSearch',
     value: function handleSearch(showCompleted, searchText) {
       this.setState({ showCompleted: showCompleted, searchText: searchText.toLowerCase() });
+    }
+  }, {
+    key: 'handleToggle',
+    value: function handleToggle(todoId) {
+      var updatedTodos = this.state.todos.map(function (todo) {
+        if (todo.id == todoId) {
+          todo.completed = !todo.completed;
+        }
+        return todo;
+      });
+      this.setState({ todos: updatedTodos });
     }
   }, {
     key: 'render',
@@ -38924,7 +38940,7 @@ var App = function (_Component) {
               'div',
               { className: 'cell large-4 small-12 medium-6 small-centered' },
               _react2.default.createElement(_Search2.default, { onSearch: this.handleSearch.bind(this) }),
-              _react2.default.createElement(_TodoList2.default, this.state),
+              _react2.default.createElement(_TodoList2.default, _extends({}, this.state, { onToggle: this.handleToggle.bind(this) })),
               _react2.default.createElement(_AddTodo2.default, { onAddTodo: this.handleAddTodo.bind(this) })
             ),
             _react2.default.createElement('div', { className: 'medium-3 large-4 cell' })
@@ -39065,11 +39081,13 @@ var TodoList = function (_Component) {
   _createClass(TodoList, [{
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement(
         'div',
         null,
         this.props.todos.map(function (todo) {
-          return _react2.default.createElement(_Todo2.default, { todo: todo, key: todo.id });
+          return _react2.default.createElement(_Todo2.default, { todo: todo, key: todo.id, onToggle: _this2.props.onToggle });
         })
       );
     }
@@ -39124,16 +39142,18 @@ var Todo = function (_Component) {
   _createClass(Todo, [{
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var todo = this.props.todo;
 
       return _react2.default.createElement(
         'div',
-        null,
-        _react2.default.createElement(
-          'p',
-          null,
-          todo.text
-        )
+        { onClick: function onClick() {
+            _this2.props.onToggle(todo.id);
+          } },
+        _react2.default.createElement('input', { type: 'checkbox', checked: todo.completed }),
+        ' ',
+        todo.text
       );
     }
   }]);
