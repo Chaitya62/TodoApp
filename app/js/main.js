@@ -25860,12 +25860,24 @@ var App = function (_Component) {
       }, {
         id: 2,
         text: 'Clean the yard'
-      }]
+      }],
+      showCompleted: false,
+      searchText: ''
     };
     return _this;
   }
 
   _createClass(App, [{
+    key: 'handleAddTodo',
+    value: function handleAddTodo(text) {
+      console.log('new todo', text);
+    }
+  }, {
+    key: 'handleSearch',
+    value: function handleSearch(showCompleted, searchText) {
+      this.setState({ showCompleted: showCompleted, searchText: searchText.toLowerCase() });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
@@ -25881,10 +25893,9 @@ var App = function (_Component) {
             _react2.default.createElement(
               'div',
               { className: 'cell large-4 small-12 medium-6 small-centered' },
-              'App Component',
-              _react2.default.createElement(_Search2.default, null),
+              _react2.default.createElement(_Search2.default, { onSearch: this.handleSearch.bind(this) }),
               _react2.default.createElement(_TodoList2.default, this.state),
-              _react2.default.createElement(_AddTodo2.default, null)
+              _react2.default.createElement(_AddTodo2.default, { onAddTodo: this.handleAddTodo.bind(this) })
             ),
             _react2.default.createElement('div', { className: 'medium-3 large-4 cell' })
           )
@@ -25936,16 +25947,34 @@ var AddTodo = function (_Component) {
     var _this = _possibleConstructorReturn(this, (AddTodo.__proto__ || Object.getPrototypeOf(AddTodo)).call(this, props));
 
     _this.state = {};
+    AddTodo.propTypes = {
+      onAddTodo: _propTypes2.default.func.isRequired
+    };
     return _this;
   }
 
   _createClass(AddTodo, [{
+    key: 'onAddTodo',
+    value: function onAddTodo(e) {
+      e.preventDefault();
+      var todoText = this.refs.todoText.value;
+      if (todoText && todoText.length > 0) {
+        this.props.onAddTodo(todoText);
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
+
       return _react2.default.createElement(
         'div',
         null,
-        'Add To Do'
+        _react2.default.createElement(
+          'form',
+          { onSubmit: this.onAddTodo.bind(this) },
+          _react2.default.createElement('input', { className: 'search', ref: 'todoText', type: 'search' }),
+          _react2.default.createElement('input', { className: 'button expanded', type: 'submit', value: 'Add' })
+        )
       );
     }
   }]);
@@ -26006,8 +26035,8 @@ var TodoList = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        this.props.todos.map(function (todo, i) {
-          return _react2.default.createElement(_Todo2.default, { todo: todo, key: i });
+        this.props.todos.map(function (todo) {
+          return _react2.default.createElement(_Todo2.default, { todo: todo, key: todo.id });
         })
       );
     }
@@ -26125,12 +26154,26 @@ var Search = function (_Component) {
   }
 
   _createClass(Search, [{
+    key: 'handleSearch',
+    value: function handleSearch() {
+      var showCompleted = this.refs.showCompleted.checked;
+      var searchText = this.refs.searchText.value;
+
+      this.props.onSearch(showCompleted, searchText);
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         null,
-        'Search'
+        _react2.default.createElement('input', { type: 'search', className: '', onChange: this.handleSearch.bind(this), ref: 'searchText', placeholder: 'Search todos' }),
+        _react2.default.createElement(
+          'label',
+          null,
+          _react2.default.createElement('input', { type: 'checkbox', onChange: this.handleSearch.bind(this), className: '', ref: 'showCompleted' }),
+          'Show completed todos'
+        )
       );
     }
   }]);
