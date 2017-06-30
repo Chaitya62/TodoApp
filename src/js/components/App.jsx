@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import uuid from 'node-uuid';
+
 import AddTodo from 'AddTodo';
 import TodoList from 'TodoList';
 import Search from 'Search';
-import uuid from 'node-uuid';
+import AppAPI from 'appAPI';
 
 export default class App extends Component {
 
@@ -11,20 +13,13 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      todos: [
-        {
-          id: uuid(),
-          text: 'Walk the dog',
-          completed: false
-        }, {
-          id: uuid(),
-          text: 'Clean the yard',
-          completed: true
-        }
-      ],
+      todos: AppAPI.getTodos(),
       showCompleted: false,
       searchText: ''
     };
+  }
+  componentDidUpdate(prevProps, prevState) {
+    AppAPI.setTodos(this.state.todos);
   }
   handleAddTodo(text) {
     this.setState({

@@ -25,7 +25,7 @@ module.exports= {
 
   resolve:{
     modules:[
-      'node_modules','./src/js/components'
+      'node_modules','./src/js/components','./src/js/api'
     ],
     alias: {
       App: path.resolve(__dirname,'./src/js/components/App.jsx'),
