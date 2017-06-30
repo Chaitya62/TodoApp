@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-export default class Search extends Component {
+class Search extends Component {
 
   constructor(props) {
     super(props);
@@ -27,3 +27,9 @@ export default class Search extends Component {
     );
   }
 }
+
+Search.propTypes = {
+  onSearch: PropTypes.func.isRequired
+};
+
+export default Search;

@@ -14,7 +14,7 @@ export default class Todo extends Component {
     return (
       <div>
         <p>
-          {todo.id}. {todo.text}
+          {todo.text}
         </p>
       </div>
     );

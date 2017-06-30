@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import AddTodo from 'AddTodo';
 import TodoList from 'TodoList';
 import Search from 'Search';
+import uuid from 'node-uuid';
 
 export default class App extends Component {
 
@@ -12,10 +13,10 @@ export default class App extends Component {
     this.state = {
       todos: [
         {
-          id: 1,
+          id: uuid(),
           text: 'Walk the dog'
         }, {
-          id: 2,
+          id: uuid(),
           text: 'Clean the yard'
         }
       ],
@@ -24,7 +25,14 @@ export default class App extends Component {
     };
   }
   handleAddTodo(text) {
-    console.log('new todo', text);
+    this.setState({
+      todos: [
+        ...this.state.todos, {
+          id: uuid(),
+          text: text
+        }
+      ]
+    })
   }
   handleSearch(showCompleted, searchText) {
     this.setState({showCompleted: showCompleted, searchText: searchText.toLowerCase()});

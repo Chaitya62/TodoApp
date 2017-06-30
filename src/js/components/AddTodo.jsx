@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-export default class AddTodo extends Component {
+class AddTodo extends Component {
 
   constructor(props) {
     super(props);
     this.state = {};
-    AddTodo.propTypes = {
-      onAddTodo: PropTypes.func.isRequired
-    };
+
   }
 
   onAddTodo(e) {
@@ -17,6 +15,7 @@ export default class AddTodo extends Component {
     if (todoText && todoText.length > 0) {
       this.props.onAddTodo(todoText);
     }
+    this.refs.todoText.value = '';
   }
   render() {
 
@@ -31,3 +30,9 @@ export default class AddTodo extends Component {
   }
 
 }
+
+AddTodo.propTypes = {
+  onAddTodo: PropTypes.func.isRequired
+};
+
+export default AddTodo;
