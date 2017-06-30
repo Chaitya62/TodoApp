@@ -56,14 +56,15 @@ export default class App extends Component {
     return (
       <div>
         <div>
-
+          <h1 className="page-title text-center">Todo App</h1>
           <div className="grid-x">
             <div className="medium-3 large-4 cell"></div>
             <div className="cell large-4 small-12 medium-6 small-centered">
-
-              <Search onSearch={this.handleSearch.bind(this)}/>
-              <TodoList todos={filteredTodos} onToggle={this.handleToggle.bind(this)}/>
-              <AddTodo onAddTodo={this.handleAddTodo.bind(this)}/>
+              <div className="container">
+                <Search onSearch={this.handleSearch.bind(this)}/>
+                <TodoList todos={filteredTodos} onToggle={this.handleToggle.bind(this)}/>
+                <AddTodo onAddTodo={this.handleAddTodo.bind(this)}/>
+              </div>
             </div>
             <div className="medium-3 large-4 cell"></div>
           </div>

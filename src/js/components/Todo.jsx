@@ -12,6 +12,9 @@ export default class Todo extends Component {
 
   render() {
     var {todo} = this.props;
+    var todoClassName = todo.completed
+      ? 'todo todo-completed'
+      : 'todo';
     var renderDate = () => {
       var message = 'Created ';
       var timestamp = todo.createdAt;
@@ -25,13 +28,16 @@ export default class Todo extends Component {
     };
     return (
 
-      <div onClick={() => {
+      <div className={todoClassName} onClick={() => {
         this.props.onToggle(todo.id);
       }}>
-
-        <input type="checkbox" onChange={() => {}} checked={todo.completed}/>
-        <p>{todo.text}</p>
-        <p>{renderDate()}</p>
+        <div>
+          <input type="checkbox" onChange={() => {}} checked={todo.completed}/>
+        </div>
+        <div>
+          <p >{todo.text}</p>
+          <p className="todo__subtext">{renderDate()}</p>
+        </div>
       </div>
     );
   }

@@ -11,12 +11,25 @@ export default class TodoList extends Component {
   }
 
   render() {
+    var self = this;
+    var {todos} = this.props;
+    var renderTodos = () => {
+      if (self.props.todos.length === 0) {
+        return (
+          <p className="container__message">
+            Nothing to do !</p>
+        );
+      } else {
+        return self.props.todos.map((todo) => {
+
+          return <Todo todo={todo} key={todo.id} onToggle={self.props.onToggle}/>
+        });
+      }
+    };
+
     return (
       <div>
-        {this.props.todos.map((todo) => {
-          return <Todo todo={todo} key={todo.id} onToggle={this.props.onToggle}/>
-        })
-}
+        {renderTodos()}
       </div>
     );
   }

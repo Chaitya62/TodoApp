@@ -16,7 +16,7 @@ class Search extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="container__header">
         <input type="search" className="" onChange={this.handleSearch.bind(this)} ref="searchText" placeholder="Search todos"/>
         <label>
           <input type="checkbox" onChange={this.handleSearch.bind(this)} className="" ref="showCompleted"/>
