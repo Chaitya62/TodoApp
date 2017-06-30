@@ -25883,7 +25883,7 @@ var App = function (_Component) {
               { className: 'cell large-4 small-12 medium-6 small-centered' },
               'App Component',
               _react2.default.createElement(_Search2.default, null),
-              _react2.default.createElement(_TodoList2.default, null),
+              _react2.default.createElement(_TodoList2.default, this.state),
               _react2.default.createElement(_AddTodo2.default, null)
             ),
             _react2.default.createElement('div', { className: 'medium-3 large-4 cell' })
@@ -26006,7 +26006,9 @@ var TodoList = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        'Todo'
+        this.props.todos.map(function (todo, i) {
+          return _react2.default.createElement(_Todo2.default, { todo: todo, key: i });
+        })
       );
     }
   }]);
@@ -26060,10 +26062,18 @@ var Todo = function (_Component) {
   _createClass(Todo, [{
     key: 'render',
     value: function render() {
+      var todo = this.props.todo;
+
       return _react2.default.createElement(
         'div',
         null,
-        'Todo'
+        _react2.default.createElement(
+          'p',
+          null,
+          todo.id,
+          '. ',
+          todo.text
+        )
       );
     }
   }]);

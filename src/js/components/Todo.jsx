@@ -10,8 +10,13 @@ export default class Todo extends Component {
   }
 
   render() {
+    var {todo} = this.props;
     return (
-      <div>Todo</div>
+      <div>
+        <p>
+          {todo.id}. {todo.text}
+        </p>
+      </div>
     );
   }
 

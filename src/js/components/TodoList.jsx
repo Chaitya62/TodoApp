@@ -12,7 +12,12 @@ export default class TodoList extends Component {
 
   render() {
     return (
-      <div>Todo</div>
+      <div>
+        {this.props.todos.map((todo, i) => {
+          return <Todo todo={todo} key={i}/>
+        })
+}
+      </div>
     );
   }
 
