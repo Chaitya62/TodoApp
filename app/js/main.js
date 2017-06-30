@@ -35535,8 +35535,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(25);
@@ -35628,6 +35626,12 @@ var App = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _state = this.state,
+          todos = _state.todos,
+          showCompleted = _state.showCompleted,
+          searchText = _state.searchText;
+
+      var filteredTodos = _appAPI2.default.filterTodos(todos, showCompleted, searchText);
       return _react2.default.createElement(
         'div',
         null,
@@ -35642,7 +35646,7 @@ var App = function (_Component) {
               'div',
               { className: 'cell large-4 small-12 medium-6 small-centered' },
               _react2.default.createElement(_Search2.default, { onSearch: this.handleSearch.bind(this) }),
-              _react2.default.createElement(_TodoList2.default, _extends({}, this.state, { onToggle: this.handleToggle.bind(this) })),
+              _react2.default.createElement(_TodoList2.default, { todos: filteredTodos, onToggle: this.handleToggle.bind(this) }),
               _react2.default.createElement(_AddTodo2.default, { onAddTodo: this.handleAddTodo.bind(this) })
             ),
             _react2.default.createElement('div', { className: 'medium-3 large-4 cell' })
@@ -45872,6 +45876,35 @@ var AppAPI = function () {
         return todos;
       }
       return [];
+    }
+  }, {
+    key: 'filterTodos',
+    value: function filterTodos(todos, showCompleted, searchText) {
+      var filteredTodos = todos;
+
+      // filer by showCompleted
+      filteredTodos = filteredTodos.filter(function (todo) {
+        return !todo.completed || showCompleted;
+      });
+
+      // filer by search text
+      filteredTodos = filteredTodos.filter(function (todo) {
+        return searchText.length === 0 || todo.text.toLowerCase().indexOf(searchText) !== -1;
+      });
+
+      // sort todos with non complted first
+      filteredTodos.sort(function (a, b) {
+        if (!a.completed && b.completed) {
+          return -1;
+        } else if (a.completed && !b.completed) {
+          return 1;
+        } else {
+
+          return 0;
+        }
+      });
+
+      return filteredTodos;
     }
   }]);
 
