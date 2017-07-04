@@ -36,8 +36,4 @@ export class AddTodo extends Component {
 
 }
 
-AddTodo.propTypes = {
-  onAddTodo: PropTypes.func.isRequired
-};
-
 export default connect()(AddTodo);

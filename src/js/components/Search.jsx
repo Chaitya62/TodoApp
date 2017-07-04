@@ -1,25 +1,28 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import * as actions from 'actions';
 
-class Search extends Component {
+export class Search extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {};
   }
-  handleSearch() {
-    var showCompleted = this.refs.showCompleted.checked;
-    var searchText = this.refs.searchText.value;
 
-    this.props.onSearch(showCompleted, searchText);
-  }
   render() {
+    var {dispatch, showCompleted, searchText} = this.props;
     return (
       <div className="container__header">
-        <input type="search" className="" onChange={this.handleSearch.bind(this)} ref="searchText" placeholder="Search todos"/>
+        <input type="search" className="" onChange={() => {
+          var searchText = this.refs.searchText.value;
+          dispatch(actions.setSearchText(searchText));
+        }} ref="searchText" value={searchText} placeholder="Search todos"/>
         <label>
-          <input type="checkbox" onChange={this.handleSearch.bind(this)} className="" ref="showCompleted"/>
+          <input type="checkbox" onChange={() => {
+            dispatch(actions.toggleShowCompleted());
+          }} className="" ref="showCompleted" checked={showCompleted}/>
           Show completed todos
         </label>
 
@@ -28,8 +31,6 @@ class Search extends Component {
   }
 }
 
-Search.propTypes = {
-  onSearch: PropTypes.func.isRequired
-};
-
-export default Search;
+export default connect((state) => {
+  return {showCompleted: state.showCompleted, searchText: state.searchText}
+})(Search);
