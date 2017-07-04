@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import {connect} from 'react-redux';
+import * as actions from 'actions';
 
-export default class Todo extends Component {
+export class Todo extends Component {
 
   constructor(props) {
     super(props);
@@ -11,7 +13,7 @@ export default class Todo extends Component {
   }
 
   render() {
-    var {todo} = this.props;
+    var {todo, dispatch} = this.props;
     var todoClassName = todo.completed
       ? 'todo todo-completed'
       : 'todo';
@@ -24,12 +26,14 @@ export default class Todo extends Component {
         timestamp = todo.completedAt;
       }
 
-      return message + moment.unix(timestamp).format('MMM Do, YYYY @ h:mm a');
+      return message + moment
+        .unix(timestamp)
+        .format('MMM Do, YYYY @ h:mm a');
     };
     return (
 
       <div className={todoClassName} onClick={() => {
-        this.props.onToggle(todo.id);
+        dispatch(actions.toggleTodo(todo.id));
       }}>
         <div>
           <input type="checkbox" onChange={() => {}} checked={todo.completed}/>
@@ -43,3 +47,5 @@ export default class Todo extends Component {
   }
 
 }
+
+export default connect()(Todo);

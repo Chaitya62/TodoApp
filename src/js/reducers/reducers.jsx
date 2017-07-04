@@ -44,6 +44,8 @@ export var todosReducer = (state = [], action) => {
               ? moment().unix()
               : undefined)
           }
+        } else {
+          return todo;
         }
       });
     default:

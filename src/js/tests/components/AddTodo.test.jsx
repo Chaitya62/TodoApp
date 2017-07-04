@@ -4,29 +4,38 @@ import expect from 'expect';
 import ReactTestUtils from 'react-dom/test-utils'
 import $ from 'jquery/dist/jquery.min.js';
 
-import AddTodo from 'AddTodo';
+import {AddTodo} from 'AddTodo';
 
 describe('AddTodo', () => {
   it('should exits', () => {
     expect(AddTodo).toExist();
   });
 
-  it('should call handleAddtodo if text is valid', () => {
+  it('should dispatch ADD_TODO when valid todo text', () => {
     const todoText = 'check mail';
+    var action = {
+      type: 'ADD_TODO',
+      text: todoText
+    };
     var spy = expect.createSpy();
-    var addTodo = ReactTestUtils.renderIntoDocument(<AddTodo onAddTodo={spy}/>)
+    var addTodo = ReactTestUtils.renderIntoDocument(<AddTodo dispatch={spy}/>)
     var $el = $(ReactDOM.findDOMNode(addTodo));
     addTodo.refs.todoText.value = todoText;
-    ReactTestUtils.Simulate.submit($el.find('form')[0]);
-    expect(spy).toHaveBeenCalledWith(todoText);
+    ReactTestUtils
+      .Simulate
+      .submit($el.find('form')[0]);
+    expect(spy).toHaveBeenCalledWith(action);
   });
 
-  it('should not call handleAddtodo if text is invalid', () => {
+  it('should not dispatch ADD_TODO if text is invalid', () => {
     var spy = expect.createSpy();
-    var addTodo = ReactTestUtils.renderIntoDocument(<AddTodo onAddTodo={spy}/>)
+    var addTodo = ReactTestUtils.renderIntoDocument(<AddTodo dispatch={spy}/>)
     var $el = $(ReactDOM.findDOMNode(addTodo));
     addTodo.refs.todoText.value = '';
-    ReactTestUtils.Simulate.submit($el.find('form')[0]);
+
+    ReactTestUtils
+      .Simulate
+      .submit($el.find('form')[0]);
     expect(spy).toNotHaveBeenCalled();
   });
 

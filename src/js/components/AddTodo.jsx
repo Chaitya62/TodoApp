@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import * as actions from 'actions';
 
-class AddTodo extends Component {
+export class AddTodo extends Component {
 
   constructor(props) {
     super(props);
@@ -11,9 +13,10 @@ class AddTodo extends Component {
 
   onAddTodo(e) {
     e.preventDefault();
+    var {dispatch} = this.props;
     var todoText = this.refs.todoText.value;
     if (todoText && todoText.length > 0) {
-      this.props.onAddTodo(todoText);
+      dispatch(actions.addTodo(todoText));
     }
     this.refs.todoText.value = '';
   }
@@ -21,7 +24,9 @@ class AddTodo extends Component {
 
     return (
       <div className="container__footer">
-        <form onSubmit={this.onAddTodo.bind(this)}>
+        <form onSubmit={this
+          .onAddTodo
+          .bind(this)}>
           <input className="search" ref="todoText" type="search"/>
           <input className="button expanded" type="submit" value="Add"/>
         </form>
@@ -35,4 +40,4 @@ AddTodo.propTypes = {
   onAddTodo: PropTypes.func.isRequired
 };
 
-export default AddTodo;
+export default connect()(AddTodo);
