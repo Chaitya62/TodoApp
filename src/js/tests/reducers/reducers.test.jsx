@@ -27,4 +27,38 @@ describe('Reducers', () => {
     });
   });
 
+  describe('todosReducer', () => {
+    it('should add new todo', () => {
+      var action = {
+        type: 'ADD_TODO',
+        text: 'Walk the dog'
+      };
+      var res = reducers.todosReducer(df([]), df(action));
+      expect(res.length).toBe(1);
+      expect(res[0].text).toBe(action.text);
+      expect(res[0].completedAt).toBe(undefined);
+      expect(res[0].completed).toBe(false);
+    });
+
+    it('should toggle todo', () => {
+      var action = {
+        type: 'TOGGLE_TODO',
+        id: 11
+      };
+      var todoData = [
+        {
+          id: 11,
+          text: 'Test features',
+          completed: false,
+          createdAt: 0,
+          completedAt: undefined
+        }
+      ];
+
+      var res = reducers.todosReducer(df(todoData), df(action));
+      expect(res[0].completed).toBe(!todoData[0].completed);
+      expect(res[0].completedAt).toBeA('number');
+    });
+  });
+
 });
