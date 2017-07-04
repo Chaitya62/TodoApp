@@ -32,7 +32,9 @@ export var todosReducer = (state = [], action) => {
         }
       ];
     case 'TOGGLE_TODO':
+
       return state.map((todo) => {
+
         if (todo.id === action.id) {
           var nextCompleted = !todo.completed;
           return {
