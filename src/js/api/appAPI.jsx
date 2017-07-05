@@ -1,4 +1,5 @@
 import $ from 'jquery/dist/jquery.min.js';
+import firebase from 'firebase';
 
 export default class AppAPI {
   static setTodos(todos) {
@@ -32,7 +33,10 @@ export default class AppAPI {
 
     // filer by search text
     filteredTodos = filteredTodos.filter((todo) => {
-      return searchText.length === 0 || todo.text.toLowerCase().indexOf(searchText) !== -1;
+      return searchText.length === 0 || todo
+        .text
+        .toLowerCase()
+        .indexOf(searchText) !== -1;
     });
 
     // sort todos with non complted first

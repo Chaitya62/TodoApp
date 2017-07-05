@@ -4,6 +4,7 @@ import App from 'App';
 import * as actions from 'actions';
 import {Provider} from 'react-redux';
 import AppAPI from 'appAPI';
+
 var store = require('Store').configure({
   //set initial todos
   todos: AppAPI.getTodos()

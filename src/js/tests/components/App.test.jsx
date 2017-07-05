@@ -14,16 +14,19 @@ describe('App', () => {
     expect(App).toExist();
   });
 
-  it('should render todoList', () => {});
-  var store = configureStore.configure();
-  var provider = ReactTestUtils.renderIntoDocument(
-    <Provider store={store}>
-      <App/>
-    </Provider>
-  );
+  it('should render todoList', () => {
+    console.log('here');
+    var store = configureStore.configure();
+    console.log('lollol');
+    var provider = ReactTestUtils.renderIntoDocument(
+      <Provider store={store}>
+        <App/>
+      </Provider>
+    );
 
-  var app = ReactTestUtils.scryRenderedComponentsWithType(provider, App)[0];
-  var todoList = ReactTestUtils.scryRenderedComponentsWithType(app, TodoList);
-  expect(todoList.length).toEqual(1);
+    var app = ReactTestUtils.scryRenderedComponentsWithType(provider, App)[0];
+    var todoList = ReactTestUtils.scryRenderedComponentsWithType(app, TodoList);
+    expect(todoList.length).toEqual(1);
+  });
 
 });
