@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from 'App';
-import * as actions from 'actions';
+import Container from 'Container';
 import {Provider} from 'react-redux';
+import * as actions from 'actions';
 import AppAPI from 'appAPI';
+import {HashRouter, Route} from 'react-router-dom';
 
 var store = require('Store').configure();
 
@@ -14,7 +15,8 @@ require('applicationStyles/app.scss');
 $(document).foundation();
 
 ReactDOM.render(
-
   <Provider store={store}>
-  <App/>
+  <HashRouter>
+    <Container/>
+  </HashRouter>
 </Provider>, document.getElementById('app'));
