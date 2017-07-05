@@ -7,13 +7,7 @@ import AppAPI from 'appAPI';
 
 var store = require('Store').configure();
 
-var initialTodos = AppAPI.getTodos();
-store.dispatch(actions.addTodos(initialTodos));
-// load foundation-sites
-store.subscribe(() => {
-  var state = store.getState();
-  AppAPI.setTodos(state.todos);
-})
+store.dispatch(actions.startAddTodos());
 //require('foundation-sites/dist/css/foundation.min.css');
 require('applicationStyles/app.scss');
 

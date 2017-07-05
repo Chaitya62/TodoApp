@@ -16849,7 +16849,7 @@ function decrypt (data, password) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.startAddTodo = exports.startToggleTodo = exports.updateTodo = exports.toggleShowCompleted = exports.addTodos = exports.addTodo = exports.setSearchText = undefined;
+exports.startAddTodos = exports.startAddTodo = exports.startToggleTodo = exports.updateTodo = exports.toggleShowCompleted = exports.addTodos = exports.addTodo = exports.setSearchText = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -16914,6 +16914,27 @@ var startAddTodo = exports.startAddTodo = function startAddTodo(text) {
       dispatch(addTodo(_extends({}, todo, {
         id: todoRef.key
       })));
+    });
+  };
+};
+
+var startAddTodos = exports.startAddTodos = function startAddTodos() {
+  return function (dispatch, getState) {
+    var todoRef = _index.firebaseRef.child('todos');
+    var todos = [];
+    return todoRef.once('value', function (snapshot) {
+      var todo;
+      snapshot.forEach(function (childSnapshot) {
+        var data = childSnapshot.val() || {};
+        todo = _extends({}, data, {
+          id: childSnapshot.key
+        });
+        todos.push(todo);
+      });
+    }).then(function () {
+      dispatch(addTodos(todos));
+    }).catch(function (e) {
+      console.log('Error', e);
     });
   };
 };
@@ -43824,13 +43845,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var store = __webpack_require__(566).configure();
 
-var initialTodos = _appAPI2.default.getTodos();
-store.dispatch(actions.addTodos(initialTodos));
-// load foundation-sites
-store.subscribe(function () {
-  var state = store.getState();
-  _appAPI2.default.setTodos(state.todos);
-});
+store.dispatch(actions.startAddTodos());
 //require('foundation-sites/dist/css/foundation.min.css');
 __webpack_require__(569);
 
@@ -72156,15 +72171,16 @@ var TodoList = exports.TodoList = function (_Component) {
           showCompleted = _props.showCompleted,
           searchText = _props.searchText;
 
+      var filteredTodos = _appAPI2.default.filterTodos(todos, showCompleted, searchText);
       var renderTodos = function renderTodos() {
-        if (self.props.todos.length === 0) {
+        if (filteredTodos.length === 0) {
           return _react2.default.createElement(
             'p',
             { className: 'container__message' },
             'Nothing to do !'
           );
         } else {
-          return _appAPI2.default.filterTodos(todos, showCompleted, searchText).map(function (todo) {
+          return filteredTodos.map(function (todo) {
 
             return _react2.default.createElement(_Todo2.default, { todo: todo, key: todo.id });
           });

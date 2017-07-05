@@ -15,19 +15,18 @@ export class TodoList extends Component {
 
     var self = this;
     var {todos, showCompleted, searchText} = this.props;
+    var filteredTodos = AppAPI.filterTodos(todos, showCompleted, searchText);
     var renderTodos = () => {
-      if (self.props.todos.length === 0) {
+      if (filteredTodos.length === 0) {
         return (
           <p className="container__message">
             Nothing to do !</p>
         );
       } else {
-        return AppAPI
-          .filterTodos(todos, showCompleted, searchText)
-          .map((todo) => {
+        return filteredTodos.map((todo) => {
 
-            return <Todo todo={todo} key={todo.id}/>
-          });
+          return <Todo todo={todo} key={todo.id}/>
+        });
       }
     };
 
