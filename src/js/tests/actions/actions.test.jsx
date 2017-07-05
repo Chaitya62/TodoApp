@@ -2,6 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import expect from 'expect';
 
+import firebase, {firebaseRef} from 'app/firebase';
 import * as actions from 'actions';
 
 var createMockStore = configureMockStore([thunk]);
@@ -39,12 +40,32 @@ describe('Actions', () => {
     expect(res).toEqual(action);
   });
 
-  it('should generate toggle todo action', () => {
+  it('should generate update todo action', () => {
     var action = {
-      type: 'TOGGLE_TODO',
-      id: '12'
+      type: 'UPDATE_TODO',
+      id: '12',
+      updates: {
+        completed: false
+      }
     };
-    var res = actions.toggleTodo(action.id);
+    var res = actions.updateTodo(action.id, action.updates);
+    expect(res).toEqual(action);
+  });
+
+  it('should generate ADD_TODOS action', () => {
+    var action = {
+      type: 'ADD_TODOS',
+      todos: [
+        {
+          id: 'abc123',
+          completedAt: null,
+          createdAt: 123454,
+          completed: false,
+          text: 'LOL this is great'
+        }
+      ]
+    };
+    var res = actions.addTodos(action.todos);
     expect(res).toEqual(action);
   });
 
@@ -61,6 +82,43 @@ describe('Actions', () => {
         done();
       })
       .catch(done);
+
+  });
+
+  describe('Tests with firebase todos', () => {
+    var testTodoRef;
+
+    beforeEach((done) => {
+      testTodoRef = firebaseRef
+        .child('todos')
+        .push();
+      testTodoRef
+        .set({text: 'Something to do', completed: false, createdAt: 2435})
+        .then(() => done());
+    })
+
+    afterEach((done) => {
+      testTodoRef
+        .remove()
+        .then(() => done());
+    });
+
+    it('should toggle todo and dispatch update todo action', (done) => {
+      const store = createMockStore();
+      const action = actions.startToggleTodo(testTodoRef.key, true);
+
+      store
+        .dispatch(action)
+        .then(() => {
+          const mockActions = store.getActions();
+
+          expect(mockActions[0]).toInclude({type: 'UPDATE_TODO', id: testTodoRef.key});
+          expect(mockActions[0].updates).toInclude({completed: true});
+          expect(mockActions[0].updates.completedAt).toBeA('number');
+          done();
+        })
+        .catch(() => done());
+    });
 
   });
 

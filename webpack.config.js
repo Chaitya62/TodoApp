@@ -30,6 +30,7 @@ module.exports= {
     alias: {
       App: path.resolve(__dirname,'./src/js/components/App.jsx'),
       Components: path.resolve(__dirname,'./src/js/components'),
+      app: path.resolve(__dirname,'./src/js/'),
       applicationStyles: path.resolve(__dirname,'./src/css/'),
       Store: path.resolve(__dirname, './src/js/store/configureStore.jsx')
     },

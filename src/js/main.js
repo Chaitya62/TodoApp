@@ -5,10 +5,10 @@ import * as actions from 'actions';
 import {Provider} from 'react-redux';
 import AppAPI from 'appAPI';
 
-var store = require('Store').configure({
-  //set initial todos
-  todos: AppAPI.getTodos()
-});
+var store = require('Store').configure();
+
+var initialTodos = AppAPI.getTodos();
+store.dispatch(actions.addTodos(initialTodos));
 // load foundation-sites
 store.subscribe(() => {
   var state = store.getState();

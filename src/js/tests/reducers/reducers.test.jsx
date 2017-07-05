@@ -40,27 +40,52 @@ describe('Reducers', () => {
       };
       var res = reducers.todosReducer(df([]), df(action));
       expect(res.length).toBe(1);
-      expect(res[0]).toBe(action.todo);
+      expect(res[0]).toEqual(action.todo);
+
     });
 
-    it('should toggle todo', () => {
+    it('should add new todos', () => {
       var action = {
-        type: 'TOGGLE_TODO',
-        id: 11
+        type: 'ADD_TODOS',
+        todos: [
+          {
+            id: 'abc123',
+            text: 'something todo',
+            completed: false,
+            createdAt: 23524
+          }
+        ]
       };
+      var res = reducers.todosReducer(df([]), df(action));
+      expect(res.length).toBe(action.todos.length);
+      expect(res).toEqual(action.todos);
+    });
+
+    it('should update todo', () => {
+
+      var updates = {
+        completed: false,
+        completedAt: null
+      }
       var todoData = [
         {
           id: 11,
           text: 'Test features',
-          completed: false,
+          completed: true,
           createdAt: 0,
-          completedAt: undefined
+          completedAt: 10023
         }
       ];
+      var action = {
+        type: 'UPDATE_TODO',
+        id: todoData[0].id,
+        updates
+      };
 
       var res = reducers.todosReducer(df(todoData), df(action));
-      expect(res[0].completed).toBe(!todoData[0].completed);
-      expect(res[0].completedAt).toBeA('number');
+      expect(res[0].completed).toBe(updates.completed);
+      expect(res[0].completedAt).toBe(updates.completedAt);
+      expect(res[0].text).toEqual(todoData[0].text);
     });
   });
 

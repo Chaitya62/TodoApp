@@ -33,7 +33,7 @@ export class Todo extends Component {
     return (
 
       <div className={todoClassName} onClick={() => {
-        dispatch(actions.toggleTodo(todo.id));
+        dispatch(actions.startToggleTodo(todo.id, !todo.completed));
       }}>
         <div>
           <input type="checkbox" onChange={() => {}} checked={todo.completed}/>

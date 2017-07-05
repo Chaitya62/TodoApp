@@ -15,6 +15,7 @@ export class AddTodo extends Component {
     e.preventDefault();
     var {dispatch} = this.props;
     var todoText = this.refs.todoText.value;
+    console.log(todoText);
     if (todoText && todoText.length > 0) {
       dispatch(actions.startAddTodo(todoText));
     }
