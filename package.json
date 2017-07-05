@@ -6,7 +6,7 @@
   "scripts": {
     "test": "NODE_ENV=test karma start",
     "build":"webpack",
-    "start": "npm run build && node server.js"
+    "start": "npm build && node server.js"
   },
   "author": "Chaitya Shah",
   "license": "ISC",
