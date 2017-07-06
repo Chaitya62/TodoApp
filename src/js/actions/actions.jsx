@@ -86,6 +86,10 @@ export var startAddTodos = () => {
   }
 }
 
+export var login = (uid) => {
+  return {type: 'LOGIN', uid};
+};
+
 export var startLogin = () => {
   return (dispatch, getState) => {
     return firebase
@@ -99,6 +103,11 @@ export var startLogin = () => {
       });
   }
 };
+
+export var logout = () => {
+  return {type: 'LOGOUT'}
+
+}
 
 export var startLogout = () => {
   return (dispatch, getState) => {

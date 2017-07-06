@@ -8,17 +8,21 @@ import createHistory from 'history/createBrowserHistory';
 import {HashRouter, Route, Redirect} from 'react-router-dom';
 import firebase from 'app/firebase';
 
+var store = require('Store').configure();
 firebase
   .auth()
   .onAuthStateChanged((user) => {
-    user
-      ? window.location.hash = '/todos'
-      : window.location.hash = '/';
+    if (user) {
+      store.dispatch(actions.login(user.uid));
+      window.location.hash = '/todos'
+    } else {
+      store.dispatch(actions.logout());
+      window.location.hash = '/';
+    }
   });
 
-var store = require('Store').configure();
-
 store.dispatch(actions.startAddTodos());
+
 //require('foundation-sites/dist/css/foundation.min.css');
 require('applicationStyles/app.scss');
 
