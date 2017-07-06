@@ -5,7 +5,7 @@ module.exports = function(config){
     browsers: ['Chrome'],
     singleRun: true,
     frameworks: ['mocha'],
-    files: [	
+    files: [
   	  'node_modules/jquery/dist/jquery.min.js',
   	  'node_modules/foundation-sites/dist/js/foundation.min.js',
 	  'src/js/tests/**/*.test.jsx'
@@ -16,7 +16,7 @@ module.exports = function(config){
     reporters: ['mocha'],
     client:{
       mocha:{
-        timeout: '5000'
+        timeout: '7000'
       },
     },
     webpack: webpackConfig,
