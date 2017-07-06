@@ -14,14 +14,13 @@ firebase
   .onAuthStateChanged((user) => {
     if (user) {
       store.dispatch(actions.login(user.uid));
+      store.dispatch(actions.startAddTodos());
       window.location.hash = '/todos'
     } else {
       store.dispatch(actions.logout());
       window.location.hash = '/';
     }
   });
-
-store.dispatch(actions.startAddTodos());
 
 //require('foundation-sites/dist/css/foundation.min.css');
 require('applicationStyles/app.scss');
