@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import * as Redux from 'react-redux';
 import * as actions from 'actions';
+import firebase from 'app/firebase';
+import {Redirect} from 'react-router-dom';
 
 export class Login extends Component {
 
@@ -18,6 +20,9 @@ export class Login extends Component {
   }
 
   render() {
+    if (firebase.auth().currentUser) {
+      return <Redirect to='/todos'/>
+    }
     return (
       <div>
         <h1 className="page-title text-center">Todo App</h1>

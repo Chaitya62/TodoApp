@@ -7,7 +7,9 @@ import TodoList from 'TodoList';
 import Search from 'Search';
 import AppAPI from 'appAPI';
 import {connect} from 'react-redux';
+import {Redirect} from 'react-router-dom';
 import * as actions from 'actions';
+import firebase from 'app/firebase';
 
 export class App extends Component {
 
@@ -22,7 +24,9 @@ export class App extends Component {
   }
 
   render() {
-
+    if (!firebase.auth().currentUser) {
+      return <Redirect to='/'/>
+    }
     return (
 
       <div>

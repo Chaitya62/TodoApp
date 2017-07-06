@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import {Route} from 'react-router-dom';
 import App from 'App';
 import Login from 'Login'
+import firebase from 'firebase';
 
-export default class MyComponent extends Component {
+export default class Container extends Component {
 
   static propTypes = {};
 

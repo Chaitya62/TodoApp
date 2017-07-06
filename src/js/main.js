@@ -4,7 +4,17 @@ import Container from 'Container';
 import {Provider} from 'react-redux';
 import * as actions from 'actions';
 import AppAPI from 'appAPI';
-import {HashRouter, Route} from 'react-router-dom';
+import createHistory from 'history/createBrowserHistory';
+import {HashRouter, Route, Redirect} from 'react-router-dom';
+import firebase from 'app/firebase';
+
+firebase
+  .auth()
+  .onAuthStateChanged((user) => {
+    user
+      ? window.location.hash = '/todos'
+      : window.location.hash = '/';
+  });
 
 var store = require('Store').configure();
 
