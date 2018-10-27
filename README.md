@@ -6,4 +6,4 @@ A todoApp with persistent data.
 
 ## Update 
 
-The project doesn't currently doesn't work because of some dependencies issue. 
+The project currently doesn't work because of some dependencies issue. 
